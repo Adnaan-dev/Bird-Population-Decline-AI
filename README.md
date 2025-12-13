@@ -17,29 +17,27 @@ A cutting-edge web application that leverages satellite imagery, deep learning, 
 ![UI Screenshot](https://github.com/user-attachments/assets/a38c01cd-5a5f-4b4c-8618-8240b8e87295)
 
 ---
-
-### 📍 Location Analysis
+### 🖥️ User Interface at logging in
 ![Location Analysis](https://github.com/user-attachments/assets/95b6580e-b8a8-487b-8f8c-0a7fcbb28993)
 
 ---
-
-### 📊 Key Metrics Dashboard
+### 📍 Location Analysis
 ![Key Metrics](https://github.com/user-attachments/assets/4f5c0d84-cdbd-4597-a140-d7e964df009b)
 
 ---
-
-### 🛰️ Satellite Imagery & Vegetation Indices
+### 📊 Key Metrics Dashboard
 ![Satellite and Vegetation Indices](https://github.com/user-attachments/assets/839f48ac-ff9b-4cf1-8085-ec98c631d20b)
 
 ---
-
-### 🌍 Land-Cover Classification
+### 🛰️ Satellite Imagery & Vegetation Indices
 ![Land Cover Classification 1](https://github.com/user-attachments/assets/13c2fab3-4494-410a-87f0-28c84bd39643)
+
+---
+### 🌍 Land-Cover Classification
 
 ![Land Cover Classification 2](https://github.com/user-attachments/assets/05d48746-de7f-4d0e-9f95-d1c35fd25f2c)
 
 ---
-
 ### 🌦️ Weather Information
 ![Weather Information](https://github.com/user-attachments/assets/104e43f1-82b8-4d8a-9d6e-ec87fd253cc3)
 
