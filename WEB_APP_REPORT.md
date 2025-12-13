@@ -536,10 +536,10 @@ Nirman Web App f - Copy/
 
 ### **API Credentials**
 ```python
-   MAPBOX_ACCESS_TOKEN=your_mapbox_token_here
-   OPENWEATHER_API_KEY=your_openweather_key_here
-   SENTINEL_CLIENT_ID=your_sentinel_client_id_here
-   SENTINEL_CLIENT_SECRET=your_sentinel_client_secret_here
+MAPBOX_ACCESS_TOKEN = "pk.eyJ1IjoiYWRuYW55dDc2IiwiYSI6..."
+OPENWEATHER_API_KEY = "1bff769b3f43bb1470ffbfe9ffc05fdb"
+SENTINEL_CLIENT_ID = "8add0ed6-799f-43ea-80d5-..."
+SENTINEL_CLIENT_SECRET = "qzQmOA7aGHmQX7EH6MnogkbAv4W45eeY"
 ```
 
 ### **Security Considerations**
