@@ -41,7 +41,15 @@ A cutting-edge web application that leverages satellite imagery, deep learning, 
 ### 🌦️ Weather Information
 ![Weather Information](https://github.com/user-attachments/assets/104e43f1-82b8-4d8a-9d6e-ec87fd253cc3)
 
+---
+### Analyzing NDVI Time-Series 
 
+<img width="1861" height="777" alt="Image" src="https://github.com/user-attachments/assets/c76e1d66-c0c3-455c-93c1-d94f5a61910c" />
+
+---
+### NDVI Time-Series Graph
+
+<img width="1842" height="782" alt="Image" src="https://github.com/user-attachments/assets/029eb694-1729-494c-a7fe-2ef865b5a1a5" />
 
 ## 🌟 Features
 
