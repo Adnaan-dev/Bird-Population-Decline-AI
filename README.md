@@ -42,7 +42,7 @@ A cutting-edge web application that leverages satellite imagery, deep learning, 
 ![Weather Information](https://github.com/user-attachments/assets/104e43f1-82b8-4d8a-9d6e-ec87fd253cc3)
 
 ---
-### Analyzing NDVI Time-Series 
+### Analyzing NDVI Time-Series Trend
 
 <img width="1861" height="777" alt="Image" src="https://github.com/user-attachments/assets/c76e1d66-c0c3-455c-93c1-d94f5a61910c" />
 
@@ -486,7 +486,11 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 ## 👥 Authors
 
-- **Developed by**: Development Team
+- **Developed by**: Development Team  (1. Jan Adnan Farooq (me)
+                                       2. Neeladri Bijay Misra
+                                       3. Ashutosh Pradhan , Github :https://github.com/AshutoshPradhan02
+                                       4. Monideepa Kar)
+
 - **Version**: 2.0
 - **Last Updated**: December 13, 2025
 
