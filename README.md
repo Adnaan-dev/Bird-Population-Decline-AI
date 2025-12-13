@@ -11,6 +11,15 @@ A cutting-edge web application that leverages satellite imagery, deep learning, 
 
 ---
 
+## Screenshots
+src="https://github.com/user-attachments/assets/104e43f1-82b8-4d8a-9d6e-ec87fd253cc3"
+<img width="1809" height="780" alt="Image" src="https://github.com/user-attachments/assets/05d48746-de7f-4d0e-9f95-d1c35fd25f2c" />
+<img width="1814" height="692" alt="Image" src="https://github.com/user-attachments/assets/13c2fab3-4494-410a-87f0-28c84bd39643" />
+<img width="1874" height="772" alt="Image" src="https://github.com/user-attachments/assets/839f48ac-ff9b-4cf1-8085-ec98c631d20b" />
+<img width="1912" height="730" alt="Image" src="https://github.com/user-attachments/assets/4f5c0d84-cdbd-4597-a140-d7e964df009b" />
+<img width="1890" height="813" alt="Image" src="https://github.com/user-attachments/assets/95b6580e-b8a8-487b-8f8c-0a7fcbb28993" />
+<img width="1911" height="819" alt="Image" src="https://github.com/user-attachments/assets/a38c01cd-5a5f-4b4c-8618-8240b8e87295" />
+
 ## 🌟 Features
 
 ### 🗺️ **Interactive Map Analysis**
