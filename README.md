@@ -486,10 +486,14 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 ## 👥 Authors
 
-- **Developed by**: Development Team  (1. Jan Adnan Farooq (me)
-                                       2. Neeladri Bijay Misra
-                                       3. Ashutosh Pradhan , Github :https://github.com/AshutoshPradhan02
-                                       4. Monideepa Kar)
+- **Developed by**: Development Team  --> ## 👥 Team Members
+
+1. Jan Adnan Farooq  
+2. Neeladri Bijay Misra  
+3. Ashutosh Pradhan  
+   - GitHub: https://github.com/AshutoshPradhan02  
+4. Monideepa Kar
+
 
 - **Version**: 2.0
 - **Last Updated**: December 13, 2025
