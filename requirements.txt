@@ -1,0 +1,12 @@
+streamlit
+numpy
+torch
+torchvision
+matplotlib
+rasterio
+requests
+streamlit-folium
+folium
+fpdf2
+python-dotenv
+msal
