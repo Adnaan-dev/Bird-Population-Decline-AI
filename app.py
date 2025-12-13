@@ -951,8 +951,8 @@ def main():
 
     st.markdown(
         "<div class='footer'>"
-        "Made with ❤️ using Streamlit, Sentinel Hub & PyTorch<br/>"
-        "<span style='font-size: 0.8rem; opacity: 0.7;'>Bird Population Decline AI Demo v2.0</span>"
+        "Made by Adnan with ❤️ using Streamlit, Sentinel Hub & PyTorch<br/>"
+        "<span style='font-size: 0.8rem; opacity: 0.7;'>Bird Population Decline AI v2.0</span>"
         "</div>",
         unsafe_allow_html=True
     )

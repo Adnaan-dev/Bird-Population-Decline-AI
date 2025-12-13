@@ -495,7 +495,7 @@ This project utilizes:
 If you find this project useful, please give it a ⭐ on GitHub!
 
 ```
-Made with ❤️ using Streamlit, Sentinel-2 & PyTorch
+Made by Adnan with ❤️ using Streamlit, Sentinel-2 & PyTorch
 ```
 
 ---
