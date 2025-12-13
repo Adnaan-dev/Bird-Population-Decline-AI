@@ -489,12 +489,10 @@ If you find this project useful, please give it a ⭐ on GitHub!
 Made by Adnan with ❤️ using Streamlit, Sentinel-2 & PyTorch
 ```
 
----
-
-**Last Updated**: December 13, 2025 | **Status**: ✅ Production Ready
-
-
 
 ## 📢 Connect with Me
 [![GitHub](https://img.shields.io/badge/GitHub-black?logo=github&logoColor=white)](https://github.com/Adnaan-dev)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/jan-adnan-farooq-b216b7321/)
+---
+
+**Last Updated**: December 13, 2025 | **Status**: ✅ Production Ready
