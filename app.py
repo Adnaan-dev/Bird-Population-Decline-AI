@@ -291,7 +291,7 @@ def login_screen():
         st.markdown("", unsafe_allow_html=True)  # Spacing
         st.markdown(
             "<div style='text-align: center; margin-bottom: 2rem;'>"
-            "<h1 class='main-title'>Bihanga Drushti 🛰️🌿</h1>"
+            "<h1 class='main-title'>Bird Population Decline AI🛰️🌿</h1>"
             "</div>", 
             unsafe_allow_html=True
         )
