@@ -408,15 +408,6 @@ streamlit run app.py
 
 ---
 
-## 🐛 Known Issues & Limitations
-
-### Current Limitations
-- ⚠️ Cloud cover affects image quality (max 40% allowed)
-- ⚠️ Model is demo-only (randomly initialized classifier)
-- ⚠️ Requires active internet for all API calls
-- ⚠️ Sentinel Hub has rate limits (~100 req/minute)
-- ⚠️ Historical data limited to cloud-free images
-
 ### Workarounds
 - Select dates with lower cloud cover
 - Fine-tune model on labeled data for production
