@@ -1,9 +1,10 @@
 /* Bird Population Decline AI — service worker (offline shell) */
-const CACHE = "bpd-v1";
+const CACHE = "bpd-v3";
 const ASSETS = [
   "/", "/dashboard", "/methodology", "/explore", "/about", "/faq",
   "/assets/css/style.css", "/assets/js/site.js", "/assets/js/dashboard.js",
   "/assets/icon.svg", "/manifest.webmanifest",
+  "/assets/img/eagle1.png", "/assets/img/eagle2.png", "/assets/img/eagle3.png",
 ];
 
 self.addEventListener("install", (e) => {
@@ -28,7 +29,21 @@ self.addEventListener("fetch", (e) => {
   // Never cache the API or cross-origin requests (Mapbox tiles, CDNs, geocoding).
   if (url.pathname.startsWith("/api/")) return;
   if (url.origin !== location.origin) return;
-  // Cache-first for the static shell, fall back to network, then to home when offline.
+
+  // Network-first for page navigations (HTML) so users always get the latest
+  // markup; fall back to the cached shell only when offline.
+  if (e.request.mode === "navigate") {
+    e.respondWith(
+      fetch(e.request).then((res) => {
+        const copy = res.clone();
+        caches.open(CACHE).then((c) => c.put(e.request, copy)).catch(() => {});
+        return res;
+      }).catch(() => caches.match(e.request).then((c) => c || caches.match("/")))
+    );
+    return;
+  }
+
+  // Cache-first for the static shell (css/js/img), fall back to network.
   e.respondWith(
     caches.match(e.request).then((cached) =>
       cached || fetch(e.request).then((res) => {

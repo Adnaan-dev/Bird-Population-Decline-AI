@@ -184,7 +184,17 @@
     }
     if ("serviceWorker" in navigator && location.protocol !== "file:") {
       window.addEventListener("load", function () {
-        navigator.serviceWorker.register("/sw.js").catch(function () {});
+        navigator.serviceWorker.register("/sw.js").then(function (reg) {
+          reg.update();
+        }).catch(function () {});
+        // When a new service worker activates, reload once so the fresh
+        // assets (and cleared old caches) take effect immediately.
+        var reloaded = false;
+        navigator.serviceWorker.addEventListener("controllerchange", function () {
+          if (reloaded) return;
+          reloaded = true;
+          window.location.reload();
+        });
       });
     }
   }

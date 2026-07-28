@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex" />
+  <title>Clearing cache… · Bird Population Decline AI</title>
+  <style>
+    html,body{height:100%;margin:0}
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+      background:radial-gradient(800px 500px at 50% 0%,rgba(16,185,129,.15),transparent 60%),#04121a;
+      color:#e2e8f0;display:grid;place-items:center;text-align:center}
+    .box{max-width:420px;padding:2rem}
+    h1{font-size:1.6rem;margin:.3rem 0 1rem}
+    .status{color:#94a3b8}
+    .ok{color:#4ade80;font-weight:700}
+    .err{color:#f87171;font-weight:700}
+    .spin{width:40px;height:40px;margin:0 auto 1.2rem;border-radius:50%;
+      border:3px solid rgba(255,255,255,.15);border-top-color:#10b981;animation:s 1s linear infinite}
+    @keyframes s{to{transform:rotate(360deg)}}
+  </style>
+</head>
+<body>
+  <div class="box">
+    <div class="spin" id="spin"></div>
+    <h1>🧹 Clearing app cache</h1>
+    <p class="status" id="status">Unregistering service worker and deleting caches…</p>
+  </div>
+  <script>
+    (async function () {
+      var status = document.getElementById("status");
+      var spin = document.getElementById("spin");
+      try {
+        if ("serviceWorker" in navigator) {
+          var regs = await navigator.serviceWorker.getRegistrations();
+          await Promise.all(regs.map(function (r) { return r.unregister(); }));
+        }
+        if (window.caches) {
+          var keys = await caches.keys();
+          await Promise.all(keys.map(function (k) { return caches.delete(k); }));
+        }
+        spin.style.display = "none";
+        status.innerHTML = '<span class="ok">✅ Cache cleared.</span> Loading the fresh app…';
+        setTimeout(function () { location.replace("/?fresh=" + Date.now()); }, 1200);
+      } catch (e) {
+        spin.style.display = "none";
+        status.innerHTML = '<span class="err">Error:</span> ' + (e && e.message ? e.message : e) +
+          '<br><br>Please hard-reload with Ctrl+Shift+R instead.';
+      }
+    })();
+  </script>
+</body>
+</html>
