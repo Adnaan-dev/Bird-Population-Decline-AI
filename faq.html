@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FAQ · Bird Population Decline AI</title>
+  <meta name="description" content="Frequently asked questions about data freshness, accuracy, cloud cover, privacy, and how habitat/risk scores are computed." />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%A6%85%3C/text%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="/assets/css/style.css" />
+</head>
+<body>
+
+  <nav class="navbar">
+    <a href="/" class="brand" style="color:inherit;"><span class="logo">🦅</span><span>Bird Population Decline&nbsp;AI</span></a>
+    <div class="nav-links">
+      <a href="/methodology" class="hide-sm">Methodology</a>
+      <a href="/explore" class="hide-sm">Explore</a>
+      <a href="/about" class="hide-sm">About</a>
+      <a href="/faq" class="hide-sm active-link">FAQ</a>
+      <button class="theme-toggle" data-theme-toggle type="button" aria-label="Toggle color theme" aria-pressed="false" title="Toggle light / dark"><span class="sun">☀️</span><span class="moon">🌙</span></button>
+      <a href="/dashboard" class="btn btn-primary" style="padding:0.6rem 1.2rem;">Launch Dashboard</a>
+    </div>
+    <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false"><span></span></button>
+  </nav>
+
+  <main class="page">
+    <a href="/" class="back-link">← Back home</a>
+    <div class="page-head reveal">
+      <span class="eyebrow">❓ FAQ</span>
+      <h1>Frequently asked <span class="gradient-text">questions</span></h1>
+      <p>Straight answers about the data, accuracy, and what these numbers really mean.</p>
+    </div>
+
+    <div class="accordion reveal">
+      <div class="acc-item">
+        <button class="acc-header" aria-expanded="false">How fresh is the satellite imagery? <span class="acc-icon">+</span></button>
+        <div class="acc-body"><div class="acc-body-inner">
+          Analysis uses the most recent low-cloud Sentinel-2 L2A scene available for the location.
+          Sentinel-2 revisits most places every ~5 days, but cloud cover means the actual "freshest"
+          usable image can be older. The NDVI time-series tab lets you inspect change over a date range.
+        </div></div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-header" aria-expanded="false">How accurate are the habitat and risk scores? <span class="acc-icon">+</span></button>
+        <div class="acc-body"><div class="acc-body-inner">
+          They are <b>index-derived proxies</b>, not validated ecological measurements. Habitat health is a
+          direct transform of mean NDVI, and risk is its complement (100 − habitat). They are useful for
+          intuition and comparison, but they don't include species data or ground truth. Treat them as a
+          starting point, not a verdict.
+        </div></div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-header" aria-expanded="false">Why did my location return no data or an error? <span class="acc-icon">+</span></button>
+        <div class="acc-body"><div class="acc-body-inner">
+          The most common causes are persistent cloud cover, imagery gaps over very remote areas or open
+          ocean, or a date range with no usable scenes. Try a nearby point, a wider date range, or a
+          different season.
+        </div></div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-header" aria-expanded="false">How exactly is bird-decline risk computed? <span class="acc-icon">+</span></button>
+        <div class="acc-body"><div class="acc-body-inner">
+          Habitat Health = clamp((mean&nbsp;NDVI + 1) × 50, 0, 100), and Bird Decline Risk = 100 − Habitat Health.
+          Healthier, greener vegetation implies better habitat and lower risk. Full details, including
+          land-cover thresholds, are on the <a href="/methodology">Methodology</a> page.
+        </div></div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-header" aria-expanded="false">Do you store my searches or any personal data? <span class="acc-icon">+</span></button>
+        <div class="acc-body"><div class="acc-body-inner">
+          No accounts or tracking. Your theme preference and saved locations are kept only in your
+          browser (session/local storage). Coordinates you analyze are sent to the serverless API to fetch
+          imagery and weather, but they aren't persisted server-side by the app.
+        </div></div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-header" aria-expanded="false">Do I need to log in? <span class="acc-icon">+</span></button>
+        <div class="acc-body"><div class="acc-body-inner">
+          No. The dashboard is open to everyone — no account, sign-up, or login is required.
+          Just open it and start analyzing locations.
+        </div></div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-header" aria-expanded="false">Can I use this for real conservation work? <span class="acc-icon">+</span></button>
+        <div class="acc-body"><div class="acc-body-inner">
+          Not on its own. It's an educational demonstration of remote-sensing techniques. Real conservation
+          decisions need field data, expert review, and peer-reviewed methods. See the caveats on the
+          <a href="/about">About</a> page.
+        </div></div>
+      </div>
+    </div>
+
+    <div style="text-align:center;margin-top:2.5rem;">
+      <a href="/dashboard" class="btn btn-primary">🚀 Try the dashboard</a>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div style="margin-bottom:0.8rem;">
+      <a href="/methodology">Methodology</a> · <a href="/explore">Explore</a> ·
+      <a href="/about">About</a> · <a href="/faq">FAQ</a>
+    </div>
+    Bird Population Decline AI · Sentinel-2 satellite intelligence · <span data-year></span>
+  </footer>
+
+  <script src="/assets/js/site.js"></script>
+</body>
+</html>

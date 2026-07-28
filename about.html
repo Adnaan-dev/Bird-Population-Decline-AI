@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>About · Bird Population Decline AI</title>
+  <meta name="description" content="The story, data sources, and honest limitations of the Bird Population Decline AI project." />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%A6%85%3C/text%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="/assets/css/style.css" />
+</head>
+<body>
+
+  <nav class="navbar">
+    <a href="/" class="brand" style="color:inherit;"><span class="logo">🦅</span><span>Bird Population Decline&nbsp;AI</span></a>
+    <div class="nav-links">
+      <a href="/methodology" class="hide-sm">Methodology</a>
+      <a href="/explore" class="hide-sm">Explore</a>
+      <a href="/about" class="hide-sm active-link">About</a>
+      <a href="/faq" class="hide-sm">FAQ</a>
+      <button class="theme-toggle" data-theme-toggle type="button" aria-label="Toggle color theme" aria-pressed="false" title="Toggle light / dark"><span class="sun">☀️</span><span class="moon">🌙</span></button>
+      <a href="/dashboard" class="btn btn-primary" style="padding:0.6rem 1.2rem;">Launch Dashboard</a>
+    </div>
+    <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false"><span></span></button>
+  </nav>
+
+  <main class="page">
+    <a href="/" class="back-link">← Back home</a>
+    <div class="page-head reveal">
+      <span class="eyebrow">🦅 About</span>
+      <h1>Satellites for <span class="gradient-text">bird habitats</span></h1>
+      <p>Turning open Earth-observation data into an accessible habitat-health readout.</p>
+    </div>
+
+    <div class="prose reveal">
+      <h2>The idea</h2>
+      <p>
+        Bird populations are sensitive indicators of ecosystem health, and their decline is
+        often tied to habitat loss — deforestation, wetland drainage, and urban sprawl.
+        Those changes are visible from space. <b>Bird Population Decline AI</b> makes that
+        connection tangible: click any point on Earth and get an immediate, index-based
+        readout of vegetation health, water, built-up density, land-cover, and a
+        habitat-health / decline-risk score.
+      </p>
+
+      <h2>Data sources</h2>
+      <ul>
+        <li><b>Sentinel-2 MSI</b> (ESA / Copernicus) — free multispectral surface reflectance, accessed through the Sentinel Hub Process API on the Copernicus Data Space Ecosystem.</li>
+        <li><b>Mapbox GL JS</b> — the interactive satellite basemap.</li>
+        <li><b>OpenWeather</b> — live weather conditions for context.</li>
+      </ul>
+
+      <h2>How it's built</h2>
+      <p>
+        The app is intentionally lightweight: a static frontend (plain HTML/CSS/JS with
+        Mapbox and Chart.js) talking to a handful of <b>Python serverless functions</b> that
+        fetch imagery, compute indices with NumPy, render heatmaps with Matplotlib, and build
+        PDF reports. It deploys with zero configuration and no persistent servers. Read the
+        full pipeline on the <a href="/methodology">Methodology</a> page.
+      </p>
+
+      <h2>Honest limitations</h2>
+      <div class="info-box">
+        This is a <b>demonstration and educational tool</b>, not a validated scientific
+        instrument. The habitat and risk scores are proxies derived from a single snapshot of
+        vegetation index values — they do <b>not</b> incorporate species data, historical
+        population counts, or ground-truth ecology. Cloud cover, seasonality and imagery
+        availability all affect results. Do not use these numbers for real conservation
+        decisions without expert validation.
+      </div>
+
+      <h2>Credits</h2>
+      <p>
+        Built with ❤️ using open data and open-source tools. Sentinel-2 imagery ©
+        ESA / Copernicus. This project is released under the MIT License.
+      </p>
+    </div>
+
+    <div style="text-align:center;margin-top:2.5rem;">
+      <a href="/dashboard" class="btn btn-primary">🚀 Launch the dashboard</a>
+      <a href="/faq" class="btn btn-ghost">Read the FAQ</a>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div style="margin-bottom:0.8rem;">
+      <a href="/methodology">Methodology</a> · <a href="/explore">Explore</a> ·
+      <a href="/about">About</a> · <a href="/faq">FAQ</a>
+    </div>
+    Bird Population Decline AI · Sentinel-2 satellite intelligence · <span data-year></span>
+  </footer>
+
+  <script src="/assets/js/site.js"></script>
+</body>
+</html>

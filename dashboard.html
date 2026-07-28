@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dashboard · Bird Population Decline AI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%A6%85%3C/text%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="/assets/css/style.css" />
+  <!-- Mapbox GL JS -->
+  <link href="https://api.mapbox.com/mapbox-gl-js/v3.7.0/mapbox-gl.css" rel="stylesheet" />
+  <script src="https://api.mapbox.com/mapbox-gl-js/v3.7.0/mapbox-gl.js"></script>
+  <!-- Mapbox GL Draw (area analysis) -->
+  <link href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.4.3/mapbox-gl-draw.css" rel="stylesheet" />
+  <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.4.3/mapbox-gl-draw.js"></script>
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+  <!-- DASHBOARD (open to everyone — no login) -->
+  <div class="dash active" id="dash">
+    <nav class="navbar">
+      <a href="/" class="brand" style="color:inherit;">
+        <span class="logo">🦅</span>
+        <span>Bird Population Decline&nbsp;AI</span>
+      </a>
+      <div class="nav-links">
+        <a href="/methodology" class="hide-sm">Methodology</a>
+        <a href="/explore" class="hide-sm">Explore</a>
+        <a href="/about" class="hide-sm">About</a>
+        <button class="theme-toggle" data-theme-toggle type="button" aria-label="Toggle color theme" aria-pressed="false" title="Toggle light / dark">
+          <span class="sun">☀️</span><span class="moon">🌙</span>
+        </button>
+      </div>
+      <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false"><span></span></button>
+    </nav>
+
+    <div class="dash-tabs">
+      <button class="tab-btn active" data-tab="map">📍 Map Analysis</button>
+      <button class="tab-btn" data-tab="change">🔀 Change Detection</button>
+      <button class="tab-btn" data-tab="series">📈 NDVI Time-Series</button>
+      <button class="tab-btn" data-tab="about">ℹ️ About</button>
+    </div>
+
+    <div class="dash-body">
+
+      <!-- ===== MAP ANALYSIS ===== -->
+      <section class="tab-panel active" id="tab-map">
+        <h1 class="panel-title">Map Analysis</h1>
+        <p class="panel-sub">Search a place or click the map to fetch Sentinel-2 imagery and analyze the habitat.</p>
+
+        <div class="toolbar">
+          <form id="searchForm" class="search-box" role="search">
+            <input class="input" type="text" id="searchInput" placeholder="🔍 Search a place (e.g. Sundarbans, Amazon, Nairobi)…" autocomplete="off" aria-label="Search a place" />
+            <button class="btn btn-primary" type="submit" style="padding:0.6rem 1.1rem;">Search</button>
+          </form>
+          <div class="toolbar-actions">
+            <button class="btn btn-ghost" id="drawAreaBtn" type="button" style="padding:0.6rem 1rem;" title="Draw an area to analyze a region">✏️ Draw area</button>
+            <button class="btn btn-ghost" id="copyLinkBtn" type="button" style="padding:0.6rem 1rem;" title="Copy a shareable link to this location" disabled>🔗 Copy link</button>
+            <button class="btn btn-ghost" id="saveLocBtn" type="button" style="padding:0.6rem 1rem;" title="Save this location" disabled>⭐ Save</button>
+          </div>
+        </div>
+
+        <div id="savedWrap" class="saved-wrap hidden">
+          <span class="saved-label">Saved:</span>
+          <div id="savedChips" class="saved-chips"></div>
+        </div>
+
+        <div class="card" style="padding:0.6rem;">
+          <div id="map"></div>
+        </div>
+
+        <div class="coord-bar">
+          <div>📍 <span class="coords" id="coordText">No location selected — search or click the map.</span></div>
+          <button class="btn btn-primary" id="analyzeBtn" disabled>🔎 Analyze this location</button>
+        </div>
+
+        <!-- Skeleton loading state -->
+        <div id="analyzeLoading" class="hidden" aria-live="polite">
+          <div class="skeleton-grid">
+            <div class="skeleton metric-sk"></div>
+            <div class="skeleton metric-sk"></div>
+            <div class="skeleton metric-sk"></div>
+            <div class="skeleton metric-sk"></div>
+          </div>
+          <div class="card" style="margin-bottom:1.4rem;">
+            <div class="img-grid">
+              <div class="skeleton img-sk"></div>
+              <div class="skeleton img-sk"></div>
+              <div class="skeleton img-sk"></div>
+              <div class="skeleton img-sk"></div>
+            </div>
+          </div>
+          <p class="loading-wrap" style="color:var(--text-dim);">🛰️ Fetching Sentinel-2 tile and running analysis…</p>
+        </div>
+
+        <div id="results" class="hidden">
+
+          <!-- Score gauges -->
+          <div class="card" id="scoreCard" style="margin-bottom:1.4rem;">
+            <h3 style="margin-bottom:1.1rem;">🦅 Habitat Health &amp; Decline Risk</h3>
+            <div class="gauge-wrap">
+              <div class="gauge" id="habitatGauge" role="img" aria-label="Habitat health score">
+                <div class="gauge-inner">
+                  <div>
+                    <div class="gauge-val gradient-text" id="habitatGaugeVal">0</div>
+                    <div class="gauge-cap">Habitat</div>
+                  </div>
+                </div>
+              </div>
+              <div class="gauge" id="riskGauge" role="img" aria-label="Bird decline risk score">
+                <div class="gauge-inner">
+                  <div>
+                    <div class="gauge-val" id="riskGaugeVal" style="color:var(--amber);">0</div>
+                    <div class="gauge-cap">Risk</div>
+                  </div>
+                </div>
+              </div>
+              <div style="flex:1;min-width:220px;">
+                <p style="color:var(--text-dim);" id="scoreSummary"></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="metrics" id="metricsRow"></div>
+
+          <div class="card hidden" id="sceneCard" style="margin-bottom:1.4rem;">
+            <h3 style="margin-bottom:0.6rem;">🛰️ Source Scene</h3>
+            <div class="metrics" id="sceneRow"></div>
+          </div>
+
+          <div class="card" style="margin-bottom:1.4rem;">
+            <h3 style="margin-bottom:0.6rem;">🛰️ Satellite &amp; Vegetation Indices</h3>
+            <div class="info-box">
+              <b>RGB:</b> True color · <b>NDVI:</b> Vegetation (red→green) ·
+              <b>NDWI:</b> Water (blues) · <b>NDBI:</b> Built-up (purple/orange)
+            </div>
+            <div class="img-grid" id="imgGrid"></div>
+
+            <!-- Heatmap legend -->
+            <div class="legend">
+              <div class="legend-item">
+                <b>NDVI · vegetation</b>
+                <div class="legend-bar lb-ndvi"></div>
+                <div class="legend-scale"><span>bare / water</span><span>dense forest</span></div>
+              </div>
+              <div class="legend-item">
+                <b>NDWI · water</b>
+                <div class="legend-bar lb-ndwi"></div>
+                <div class="legend-scale"><span>dry</span><span>open water</span></div>
+              </div>
+              <div class="legend-item">
+                <b>NDBI · built-up</b>
+                <div class="legend-bar lb-ndbi"></div>
+                <div class="legend-scale"><span>natural</span><span>urban</span></div>
+              </div>
+              <div class="legend-item">
+                <b>EVI · enhanced veg</b>
+                <div class="legend-bar lb-ndvi"></div>
+                <div class="legend-scale"><span>low</span><span>high</span></div>
+              </div>
+              <div class="legend-item">
+                <b>NDMI · moisture</b>
+                <div class="legend-bar lb-ndmi"></div>
+                <div class="legend-scale"><span>dry</span><span>moist</span></div>
+              </div>
+              <div class="legend-item">
+                <b>NBR · burn / veg</b>
+                <div class="legend-bar lb-ndvi"></div>
+                <div class="legend-scale"><span>burned</span><span>healthy</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" style="margin-bottom:1.4rem;">
+            <h3 style="margin-bottom:0.8rem;">🌍 Land-Cover Classification</h3>
+            <span class="badge" id="landcoverBadge">—</span>
+          </div>
+
+          <div class="card hidden" id="weatherCard" style="margin-bottom:1.4rem;">
+            <h3 style="margin-bottom:0.8rem;">🌦️ Weather Conditions</h3>
+            <div class="metrics" id="weatherRow"></div>
+          </div>
+
+          <div class="card hidden" id="birdsCard" style="margin-bottom:1.4rem;">
+            <h3 style="margin-bottom:0.4rem;">🐦 Observed Birds (GBIF)</h3>
+            <p class="panel-sub" style="margin-bottom:1rem;">Real recorded bird occurrences near this location — grounding the habitat signal in actual sightings.</p>
+            <div class="metrics" id="birdsRow"></div>
+            <div id="birdsSpecies" class="chip-row"></div>
+          </div>
+
+          <div class="btn-row">
+            <button class="btn btn-primary" id="reportBtn">📄 PDF Report</button>
+            <button class="btn btn-ghost" id="csvBtn">⬇️ CSV</button>
+            <button class="btn btn-ghost" id="geojsonBtn">⬇️ GeoJSON</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== CHANGE DETECTION ===== -->
+      <section class="tab-panel" id="tab-change">
+        <h1 class="panel-title">Change Detection</h1>
+        <p class="panel-sub">Compare two dates for the last selected location and see where vegetation was lost or gained.</p>
+
+        <div class="card">
+          <div id="changeNoLoc" class="info-box">Select a location on the Map Analysis tab first.</div>
+          <div id="changeControls" class="hidden">
+            <p style="color:var(--text-dim);margin-bottom:1rem;">Location: <b class="coords" id="changeCoord"></b></p>
+            <div class="row">
+              <div class="field">
+                <label for="date1">Earlier date</label>
+                <input class="input" type="date" id="date1" />
+              </div>
+              <div class="field">
+                <label for="date2">Later date</label>
+                <input class="input" type="date" id="date2" />
+              </div>
+              <button class="btn btn-primary" id="changeBtn">🔀 Compare</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="changeLoading" class="loading-wrap hidden">
+          <div class="loader"></div>
+          <p>🛰️ Fetching two Sentinel-2 scenes and differencing NDVI…</p>
+        </div>
+
+        <div id="changeResults" class="hidden">
+          <div class="metrics" id="changeMetrics"></div>
+          <div class="card">
+            <h3 style="margin-bottom:0.6rem;">NDVI change map</h3>
+            <div class="info-box"><b>Blue</b> = vegetation gain · <b>Red</b> = vegetation loss (date₂ − date₁)</div>
+            <div class="img-grid" id="changeImgs"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== TIME SERIES ===== -->
+      <section class="tab-panel" id="tab-series">
+        <h1 class="panel-title">NDVI Time-Series</h1>
+        <p class="panel-sub">Track mean NDVI over time for the last location you analyzed.</p>
+
+        <div class="card">
+          <div id="seriesNoLoc" class="info-box">Select and analyze a location on the Map Analysis tab first.</div>
+          <div id="seriesControls" class="hidden">
+            <p style="color:var(--text-dim);margin-bottom:1rem;">Location: <b class="coords" id="seriesCoord"></b></p>
+            <div class="row">
+              <div class="field">
+                <label for="startDate">Start date</label>
+                <input class="input" type="date" id="startDate" />
+              </div>
+              <div class="field">
+                <label for="endDate">End date</label>
+                <input class="input" type="date" id="endDate" />
+              </div>
+              <button class="btn btn-primary" id="seriesBtn">📈 Compute NDVI Trend</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="seriesLoading" class="loading-wrap hidden">
+          <div class="loader"></div>
+          <p>📈 Sampling Sentinel-2 archive (~monthly)…</p>
+        </div>
+
+        <div class="card hidden" id="seriesChartCard" style="margin-top:1.4rem;">
+          <h3 style="margin-bottom:0.8rem;">NDVI Trend</h3>
+          <canvas id="ndviChart" height="120"></canvas>
+          <div id="seriesStats" class="info-box hidden" style="margin-top:1rem;"></div>
+        </div>
+      </section>
+
+      <!-- ===== ABOUT ===== -->
+      <section class="tab-panel" id="tab-about">
+        <h1 class="panel-title">About</h1>
+        <p class="panel-sub">What this platform does and how it is built.</p>
+
+        <div class="card" style="margin-bottom:1.4rem;">
+          <p style="color:var(--text-dim);">
+            <b style="color:var(--text);">Bird Population Decline AI</b> demonstrates how satellite
+            remote sensing can support habitat monitoring. For a given location it:
+          </p>
+          <ul style="color:var(--text-dim);margin:1rem 0 0 1.2rem;line-height:1.9;">
+            <li>Fetches Sentinel-2 multispectral imagery via Sentinel Hub</li>
+            <li>Computes NDVI / NDWI / NDBI from the spectral bands</li>
+            <li>Derives land-cover from index thresholds</li>
+            <li>Scores habitat health and bird-decline risk from NDVI</li>
+            <li>Charts NDVI time-series to reveal gradual habitat change</li>
+            <li>Generates a PDF report for documentation</li>
+          </ul>
+          <p style="color:var(--text-dim);margin-top:1rem;">
+            For the full pipeline see the <a href="/methodology">Methodology</a> page,
+            or read the project background on the <a href="/about">About</a> page.
+          </p>
+        </div>
+
+        <div class="grid grid-2">
+          <div class="card">
+            <h3 style="margin-bottom:0.8rem;">Technology Stack</h3>
+            <div class="info-box"><b>Remote Sensing:</b> Sentinel-2 MSI via Sentinel Hub API</div>
+            <div class="info-box"><b>Processing:</b> Python serverless (NumPy, tifffile, Matplotlib)</div>
+            <div class="info-box"><b>Frontend:</b> Mapbox GL JS + Chart.js on a static site</div>
+            <div class="info-box"><b>Hosting:</b> Vercel (static + serverless functions)</div>
+          </div>
+          <div class="card">
+            <h3 style="margin-bottom:0.8rem;">Index Formulas</h3>
+            <div class="info-box"><b>NDVI</b> = (NIR − Red) / (NIR + Red) — vegetation health</div>
+            <div class="info-box"><b>NDWI</b> = (Green − NIR) / (Green + NIR) — water content</div>
+            <div class="info-box"><b>NDBI</b> = (SWIR − NIR) / (SWIR + NIR) — built-up areas</div>
+            <div class="info-box"><b>Habitat</b> = (NDVI + 1) × 50 · <b>Risk</b> = 100 − Habitat</div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <footer class="site-footer">
+      <div style="margin-bottom:0.8rem;">
+        <a href="/methodology">Methodology</a> ·
+        <a href="/explore">Explore</a> ·
+        <a href="/about">About</a> ·
+        <a href="/faq">FAQ</a>
+      </div>
+      Bird Population Decline AI · Sentinel-2 satellite intelligence · <span id="year"></span>
+    </footer>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="/assets/js/site.js"></script>
+  <script src="/assets/js/dashboard.js"></script>
+</body>
+</html>

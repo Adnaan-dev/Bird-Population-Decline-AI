@@ -1,0 +1,14 @@
+# Original Streamlit app dependencies (Python 3.12).
+# Run the legacy app from this folder with:  streamlit run app.py
+streamlit
+numpy
+torch
+torchvision
+matplotlib
+rasterio
+requests
+streamlit-folium
+folium
+fpdf2
+python-dotenv
+msal

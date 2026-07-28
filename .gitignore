@@ -1,2 +1,21 @@
-/.env
+# Environment / secrets
+.env
+.env.local
+.env.*.local
+
+# Legacy model weights (not needed by the serverless app)
 /bird_decline_model.pth
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Vercel
+.vercel/
+
+# OS / editor
+.DS_Store
+Thumbs.db

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bird Population Decline AI — Geospatial Habitat Intelligence</title>
+  <meta name="description" content="Satellite intelligence platform that analyzes bird habitat health and population-decline risk from Sentinel-2 imagery using NDVI, NDWI and NDBI." />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%A6%85%3C/text%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="/assets/css/style.css" />
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <a href="/" class="brand" style="color:inherit;">
+      <span class="logo">🦅</span>
+      <span>Bird Population Decline&nbsp;AI</span>
+    </a>
+    <div class="nav-links">
+      <a href="#features" class="hide-sm">Features</a>
+      <a href="#how" class="hide-sm">How it works</a>
+      <a href="/methodology" class="hide-sm">Methodology</a>
+      <a href="/explore" class="hide-sm">Explore</a>
+      <a href="/faq" class="hide-sm">FAQ</a>
+      <button class="theme-toggle" data-theme-toggle type="button" aria-label="Toggle color theme" aria-pressed="false" title="Toggle light / dark">
+        <span class="sun">☀️</span><span class="moon">🌙</span>
+      </button>
+      <a href="/dashboard" class="btn btn-primary" style="padding:0.6rem 1.2rem;">Launch Dashboard</a>
+    </div>
+    <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false"><span></span></button>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-motif" aria-hidden="true">
+      <div class="planet"></div>
+      <div class="orbit o1"><span class="sat"></span></div>
+      <div class="orbit o2"><span class="sat"></span></div>
+    </div>
+    <span class="eyebrow">🛰️ Sentinel-2 · Remote Sensing · AI</span>
+    <h1>Monitor bird habitats <br /><span class="gradient-text">from space.</span></h1>
+    <p class="lead">
+      A geospatial intelligence platform that turns Sentinel-2 multispectral imagery into
+      actionable ecology: quantify vegetation health, detect water and urbanization, and
+      estimate bird-population-decline risk for any location on Earth.
+    </p>
+    <div class="hero-actions">
+      <a href="/dashboard" class="btn btn-primary">🚀 Launch Dashboard</a>
+      <a href="/explore" class="btn btn-ghost">🌍 Explore examples</a>
+    </div>
+
+    <!-- STAT BAND -->
+    <div class="stat-band" style="margin-top:3rem;">
+      <div class="stat reveal">
+        <div class="snum gradient-text"><span data-count="5">0</span></div>
+        <div class="slabel">Spectral bands (B02–B11)</div>
+      </div>
+      <div class="stat reveal d1">
+        <div class="snum gradient-text"><span data-count="3">0</span></div>
+        <div class="slabel">Indices · NDVI · NDWI · NDBI</div>
+      </div>
+      <div class="stat reveal d2">
+        <div class="snum gradient-text"><span data-count="100">0</span></div>
+        <div class="slabel">Habitat score range 0–100</div>
+      </div>
+      <div class="stat reveal d3">
+        <div class="snum gradient-text">🌍</div>
+        <div class="slabel">Global coverage</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- FEATURES -->
+  <section class="section" id="features">
+    <div class="section-head reveal">
+      <h2>Everything you need to <span class="gradient-text">assess a habitat</span></h2>
+      <p>Click any point on the map and get a full ecological readout in seconds.</p>
+    </div>
+    <div class="grid grid-3">
+      <div class="card feature reveal">
+        <div class="ficon">🗺️</div>
+        <h3>Interactive Map Analysis</h3>
+        <p>Click anywhere on a high-resolution satellite basemap to fetch and analyze live Sentinel-2 imagery for that location.</p>
+      </div>
+      <div class="card feature reveal d1">
+        <div class="ficon">🌿</div>
+        <h3>NDVI · NDWI · NDBI</h3>
+        <p>Compute vegetation, water and built-up indices from multispectral bands, rendered as clear color heatmaps.</p>
+      </div>
+      <div class="card feature reveal d2">
+        <div class="ficon">🦅</div>
+        <h3>Habitat &amp; Risk Scoring</h3>
+        <p>Convert spectral signals into a Habitat Health Score (0–100) and a Bird Population Decline Risk level.</p>
+      </div>
+      <div class="card feature reveal">
+        <div class="ficon">📈</div>
+        <h3>NDVI Time-Series</h3>
+        <p>Track vegetation health across months to spot seasonal cycles and long-term habitat degradation.</p>
+      </div>
+      <div class="card feature reveal d1">
+        <div class="ficon">🌦️</div>
+        <h3>Live Weather</h3>
+        <p>Pull real-time temperature, humidity, wind and cloud cover to contextualize habitat conditions.</p>
+      </div>
+      <div class="card feature reveal d2">
+        <div class="ficon">📄</div>
+        <h3>PDF Reports</h3>
+        <p>Generate a documented habitat analysis report for any location, ready to share or archive.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="section" id="how">
+    <div class="section-head reveal">
+      <h2>How it <span class="gradient-text">works</span></h2>
+      <p>A fully serverless pipeline — no persistent servers, deploys anywhere.</p>
+    </div>
+    <div class="grid grid-2">
+      <div class="card reveal">
+        <div class="grid steps" style="gap:1.5rem;">
+          <div class="step"><div class="num">1</div><div><h3>Pick a location</h3><p>Click a point on the interactive Mapbox satellite map.</p></div></div>
+          <div class="step"><div class="num">2</div><div><h3>Fetch Sentinel-2</h3><p>A serverless function pulls a low-cloud multispectral tile (B02–B11).</p></div></div>
+          <div class="step"><div class="num">3</div><div><h3>Compute indices</h3><p>NDVI, NDWI and NDBI are derived and rendered as color composites.</p></div></div>
+          <div class="step"><div class="num">4</div><div><h3>Score &amp; classify</h3><p>Habitat health, decline risk and land-cover are derived from the indices.</p></div></div>
+          <div class="step"><div class="num">5</div><div><h3>Report</h3><p>View metrics, weather and heatmaps — then export a PDF.</p></div></div>
+        </div>
+        <a href="/methodology" class="back-link" style="margin-top:1.4rem;margin-bottom:0;">Read the full methodology →</a>
+      </div>
+      <div class="card reveal d1" id="tech">
+        <h3 style="font-size:1.3rem;margin-bottom:1rem;">Technology</h3>
+        <p style="color:var(--text-dim);margin-bottom:1rem;">Built to run entirely on serverless infrastructure.</p>
+        <div>
+          <span class="pill">Sentinel-2 MSI</span>
+          <span class="pill">Mapbox GL JS</span>
+          <span class="pill">Python Serverless</span>
+          <span class="pill">NumPy</span>
+          <span class="pill">Matplotlib</span>
+          <span class="pill">tifffile</span>
+          <span class="pill">Chart.js</span>
+          <span class="pill">OpenWeather</span>
+          <span class="pill">Vercel</span>
+        </div>
+        <div class="info-box" style="margin-top:1.4rem;">
+          Land-cover is derived deterministically from spectral indices — grounded in
+          remote-sensing conventions rather than an unverified model.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section">
+    <div class="cta-band reveal">
+      <h2>Ready to explore a habitat?</h2>
+      <p>Open the dashboard and analyze any location on Earth in seconds.</p>
+      <div class="hero-actions">
+        <a href="/dashboard" class="btn btn-primary">🚀 Launch Dashboard</a>
+        <a href="/about" class="btn btn-ghost">About this project</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div style="margin-bottom:0.8rem;">
+      <a href="/methodology">Methodology</a> ·
+      <a href="/explore">Explore</a> ·
+      <a href="/about">About</a> ·
+      <a href="/faq">FAQ</a>
+    </div>
+    Built with ❤️ using Sentinel-2, Mapbox &amp; Python serverless functions ·
+    Bird Population Decline AI · <span data-year></span>
+  </footer>
+
+  <script src="/assets/js/site.js"></script>
+</body>
+</html>

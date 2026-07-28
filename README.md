@@ -1,546 +1,228 @@
 # 🦅 Bird Population Decline AI
 
-> **Advanced Geospatial Intelligence Platform for Habitat Monitoring**
+> **Geospatial habitat intelligence — a static frontend + Python serverless API, ready to deploy on Vercel.**
 
-A cutting-edge web application that leverages satellite imagery, deep learning, and real-time weather data to analyze bird habitat health and predict population decline risk. Built with Streamlit, PyTorch, and Sentinel-2 satellite data.
+Analyze bird habitat health and population-decline risk for any location on Earth
+from **Sentinel-2** satellite imagery. Click a point (or draw an area) on the map to
+compute a suite of spectral indices, score habitat health and bird-decline risk,
+classify land-cover, overlay **real bird sightings (GBIF)**, pull live weather,
+compare two dates for vegetation change, chart NDVI over time, and export the results
+as a **PDF, CSV or GeoJSON**.
 
-[![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/)
-[![Streamlit](https://img.shields.io/badge/Streamlit-1.x-red.svg)](https://streamlit.io/)
-[![PyTorch](https://img.shields.io/badge/PyTorch-0.14+-orange.svg)](https://pytorch.org/)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-
----
-
-## 📸 Application Screenshots
-
-### 🖥️ User Interface
-![UI Screenshot](https://github.com/user-attachments/assets/a38c01cd-5a5f-4b4c-8618-8240b8e87295)
+The app is a **static frontend + Python serverless functions** (no build step, no
+framework). It deploys on Vercel with zero configuration. The original Streamlit +
+PyTorch prototype is archived under [`legacy_streamlit/`](legacy_streamlit/).
 
 ---
-### 🖥️ User Interface at logging in
-![Location Analysis](https://github.com/user-attachments/assets/95b6580e-b8a8-487b-8f8c-0a7fcbb28993)
-
----
-### 📍 Location Analysis
-![Key Metrics](https://github.com/user-attachments/assets/4f5c0d84-cdbd-4597-a140-d7e964df009b)
-
----
-### 📊 Key Metrics Dashboard
-![Satellite and Vegetation Indices](https://github.com/user-attachments/assets/839f48ac-ff9b-4cf1-8085-ec98c631d20b)
-
----
-### 🛰️ Satellite Imagery & Vegetation Indices
-![Land Cover Classification 1](https://github.com/user-attachments/assets/13c2fab3-4494-410a-87f0-28c84bd39643)
-
----
-### 🌍 Land-Cover Classification
-
-![Land Cover Classification 2](https://github.com/user-attachments/assets/05d48746-de7f-4d0e-9f95-d1c35fd25f2c)
-
----
-### 🌦️ Weather Information
-![Weather Information](https://github.com/user-attachments/assets/104e43f1-82b8-4d8a-9d6e-ec87fd253cc3)
-
----
-### Analyzing NDVI Time-Series Trend
-
-<img width="1861" height="777" alt="Image" src="https://github.com/user-attachments/assets/c76e1d66-c0c3-455c-93c1-d94f5a61910c" />
-
----
-### NDVI Time-Series Graph
-
-<img width="1842" height="782" alt="Image" src="https://github.com/user-attachments/assets/029eb694-1729-494c-a7fe-2ef865b5a1a5" />
 
 ## 🌟 Features
 
-### 🗺️ **Interactive Map Analysis**
-- Click on any location on the satellite map to analyze bird habitat
-- Real-time processing of Sentinel-2 multispectral imagery
-- Instant results with vegetation, water, and urban indices
+**Analysis**
+- 🗺️ **Interactive map analysis** — click a point or **draw an area** (polygon → bounding box)
+- 🌿 **7 spectral indices** — NDVI, NDWI, NDBI, **EVI, SAVI, NDMI, NBR** as color heatmaps
+- 🦅 **Habitat health & bird-decline risk** — 0–100 scoring with animated gauges
+- 🌍 **Land-cover classification** — Forest / Cropland / Urban / Water / Barren (rule-based)
+- 🔀 **Change detection** — pick two dates → NDVI-difference map + % vegetation loss/gain
+- 📈 **NDVI time-series** — monthly sampling with a seasonal baseline band + anomaly readout
+- 🛰️ **Source-scene metadata** — actual acquisition date & cloud cover of the tile used
 
-### 📊 **Satellite Data Processing**
-- **NDVI** (Normalized Difference Vegetation Index) - Vegetation health
-- **NDWI** (Normalized Difference Water Index) - Water body detection
-- **NDBI** (Normalized Difference Built Index) - Urban development tracking
-- Multi-spectral band analysis (Blue, Green, Red, Near-Infrared)
+**Credibility**
+- 🐦 **Real bird data (GBIF)** — observed species count, richness and top species near the point
 
-### 🤖 **AI-Powered Classification**
-- ResNet18 deep learning model for land-cover classification
-- Automatic detection of Forest, Urban, and Water areas
-- Habitat suitability scoring for bird populations
+**UX**
+- 🔍 **Place search** (Mapbox geocoding) · ⭐ **saved locations** · 🔗 **shareable permalinks**
+- 🌗 **Light/dark theme**, responsive design, keyboard-navigable, reduced-motion aware
+- 📄 **Exports** — polished **PDF** report, plus **CSV** and **GeoJSON**
+- 🌦️ **Live weather** — temperature, humidity, wind, cloud cover
+- 📲 **Installable PWA** with an offline app shell
+- 🔓 **Open access** — no login required; anyone can use the dashboard
 
-### 📈 **Time-Series Analysis**
-- Track vegetation health trends over 1-365+ days
-- Identify seasonal patterns and long-term degradation
-- Historical satellite data comparison
-
-### 🌡️ **Real-Time Weather Integration**
-- Current temperature, humidity, wind speed
-- Cloud coverage and pressure data
-- Essential for understanding habitat conditions
-
-### 🎨 **Modern Glassmorphism UI**
-- Professional dark theme with gradient colors
-- Smooth animations and hover effects
-- Responsive design for desktop and tablet
-- Interactive visualizations and heatmaps
-
-### 📊 **Comprehensive Metrics**
-- Habitat Health Score (0-100%)
-- Bird Population Decline Risk Level (Low/Medium/High)
-- Land-cover percentage breakdown
-- NDVI, NDWI, NDBI value analysis
+**Production-readiness**
+- 🛡️ Opt-in **origin allow-list** + best-effort **per-IP rate limiting** on the API
+- ⚡ In-memory **result caching** (per warm instance) for repeat lookups
+- 🐞 Optional **Sentry** error monitoring · ✅ **GitHub Actions CI**
 
 ---
 
-## 🚀 Quick Start
+## 🏗️ Architecture
 
-### Prerequisites
-- Python 3.8 or higher
-- pip or conda
-- Internet connection (for API calls)
+```
+Browser (static site)                       Vercel Python Serverless Functions
+┌────────────────────────────┐             ┌────────────────────────────────────────┐
+│ index.html    (landing)    │             │ /api/config      public config          │
+│ dashboard.html (app)       │             │ /api/analyze     Sentinel-2 + indices    │
+│ methodology / explore /    │   fetch()   │ /api/change      two-date NDVI diff      │
+│ about / faq  (content)     │ ──────────► │ /api/timeseries  NDVI series + baseline  │
+│ assets/css, assets/js      │             │ /api/weather     OpenWeather proxy       │
+│ Mapbox GL JS + GL Draw     │             │ /api/report      PDF report (fpdf2)      │
+│ Chart.js · service worker  │             └────────────────────────────────────────┘
+└────────────────────────────┘              shared: api/_utils.py
+```
 
-### Installation
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/yourusername/bird-population-decline-ai.git
-   cd bird-population-decline-ai
-   ```
-
-2. **Create virtual environment** (recommended)
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
-
-3. **Install dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-4. **Configure API Keys**
-   
-   Create a `.env` file in the project root:
-   ```env
-   MAPBOX_ACCESS_TOKEN=your_mapbox_token_here
-   OPENWEATHER_API_KEY=your_openweather_key_here
-   SENTINEL_CLIENT_ID=your_sentinel_client_id_here
-   SENTINEL_CLIENT_SECRET=your_sentinel_client_secret_here
-   ```
-
-5. **Run the application**
-   ```bash
-   streamlit run app.py
-   ```
-   
-   The app will open at `http://localhost:8501`
+- **No PyTorch / rasterio.** Land-cover is derived deterministically from spectral
+  indices (remote-sensing conventions), and GeoTIFFs are parsed with pure-Python
+  `tifffile` — so the function bundle stays well under Vercel's Python size limit.
+- **Secrets stay server-side.** Sentinel + OpenWeather keys are read from environment
+  variables and never reach the browser. The Mapbox token is a public client token
+  (restrict it by URL in your Mapbox account).
 
 ---
 
-## 🔧 API Setup
+## 🔌 API
 
-### 1. **Sentinel Hub** (Satellite Data)
-- Sign up at [Sentinel Hub](https://www.sentinel-hub.com/)
-- Create OAuth client credentials
-- Note your Client ID and Secret
-
-### 2. **OpenWeather API** (Weather Data)
-- Get free API key at [OpenWeather](https://openweathermap.org/api)
-- Free tier: 1000 calls/day
-- Supports 60+ weather parameters
-
-### 3. **Mapbox** (Satellite Maps)
-- Create account at [Mapbox](https://www.mapbox.com/)
-- Generate access token in Account settings
-- Free tier: 25,000 monthly vector tiles
+| Endpoint | Method | Body / Query | Returns |
+|---|---|---|---|
+| `/api/config` | GET | – | Mapbox token + capability flags |
+| `/api/analyze` | POST | `{lat, lon, bbox?}` | indices, scores, land-cover, heatmaps, weather, place, **birds**, **scene** |
+| `/api/change` | POST | `{lat, lon, date1, date2}` | NDVI delta, % loss/gain, before/after/diff maps |
+| `/api/timeseries` | POST | `{lat, lon, start, end}` | dates + values + baseline/anomaly stats |
+| `/api/weather` | GET | `?lat=&lon=` | current weather |
+| `/api/report` | POST | metrics `{…, place?}` | PDF (`application/pdf`) |
 
 ---
 
-## 📚 Usage Guide
+## 🚀 Deploy on Vercel
 
-### **Module 1: Map Analysis** 📍
+1. Push this repository to GitHub/GitLab/Bitbucket.
+2. In Vercel: **Add New… → Project → Import** the repo. **No build settings needed**
+   (zero-config: static files at the root, Python functions in `/api`).
+3. Add **Environment Variables** (Project Settings → Environment Variables):
 
-1. Navigate to **"📍 Map Analysis"** in the sidebar
-2. **Click on the map** to select a location (any latitude/longitude)
-3. Wait for data processing (5-15 seconds)
-4. View results:
-   - 🌿 **Key Metrics**: Habitat health, bird risk, NDVI values
-   - 🛰️ **Satellite Imagery**: RGB, NDVI, NDWI, NDBI heatmaps
-   - 🏙️ **Land-Cover Classification**: Forest/Urban/Water breakdown
-   - 🌡️ **Weather Information**: Current weather conditions
+   | Variable | Required | Notes |
+   |---|---|---|
+   | `MAPBOX_ACCESS_TOKEN` | ✅ | public client token, sent to the browser for the basemap |
+   | `SENTINEL_CLIENT_ID` | ✅ | Sentinel Hub / CDSE OAuth client ID |
+   | `SENTINEL_CLIENT_SECRET` | ✅ | Sentinel Hub / CDSE OAuth secret |
+   | `OPENWEATHER_API_KEY` | ✅ | OpenWeather |
+   | `ALLOWED_ORIGIN_HOSTS` | optional | comma-separated hostnames allowed to call the API (e.g. `your-app.vercel.app`). Unset = allow all |
+   | `RATE_LIMIT_PER_MIN` | optional | per-IP request cap (default `60`; `0` disables) |
+   | `CACHE_TTL_SECONDS` | optional | cache lifetime for repeat analyze calls (default `600`) |
+   | `SENTRY_DSN` | optional | enables Sentry error monitoring |
+   | `SENTINEL_TOKEN_URL` / `SENTINEL_PROCESS_URL` / `SENTINEL_CATALOG_URL` | optional | override Sentinel endpoints (default to CDSE) |
 
-**Example Locations:**
-- Western Ghats, India: `14.13°N, 74.24°E`
-- Amazon Rainforest, Brazil: `-3.00°S, -60.00°W`
-- Everglades, USA: `25.35°N, -80.70°W`
+4. **Deploy.** Landing page at `/`, dashboard at `/dashboard`, content pages at
+   `/methodology`, `/explore`, `/about`, `/faq`, and the API at `/api/*`.
 
-### **Module 2: NDVI Time-Series** 📈
+### 🔑 Get Sentinel Hub credentials (free via CDSE)
 
-1. Navigate to **"📈 NDVI Time-Series"** in the sidebar
-2. Select **Start Date** and **End Date** (up to 365 days)
-3. Click **"📈 Compute NDVI Trend"**
-4. View vegetation health trend over time
-5. Analyze patterns:
-   - Seasonal fluctuations
-   - Long-term degradation/recovery
-   - Impact of human activities
+Sentinel Hub access is now provided through the **Copernicus Data Space Ecosystem (CDSE)**:
 
-**Interpretation:**
-- **Upward trend**: Vegetation recovery ✅
-- **Downward trend**: Habitat degradation ❌
-- **Seasonal pattern**: Natural cycles
+1. Create a free account at <https://dataspace.copernicus.eu/>.
+2. Open the **CDSE Sentinel Hub dashboard** → <https://shapps.dataspace.copernicus.eu/dashboard/>.
+3. **User Settings → OAuth clients → Create** (grant type: *Client credentials*).
+4. Copy the **Client ID** and **Client Secret** (the secret is shown only once).
 
-### **Module 3: About** ℹ️
+The app targets the CDSE endpoints by default. To use the legacy commercial
+`services.sentinel-hub.com` deployment instead, set the `SENTINEL_*_URL` overrides.
 
-View technology stack and project information:
-- Satellite data sources (Sentinel-2)
-- Deep learning framework (PyTorch)
-- Web framework (Streamlit)
-- Geospatial tools (Folium, Mapbox)
+> 🔐 **Never commit real keys.** `.env` is git-ignored. If any keys ever landed in
+> git history, rotate them.
 
 ---
 
-## 📊 Technical Architecture
+## 💻 Local development
 
-```
-┌─────────────────────────────────────┐
-│     Streamlit Web Interface         │
-│  (Interactive Map + User Controls)  │
-└────────────────┬────────────────────┘
-                 │
-        ┌────────┴────────┐
-        │                 │
-   ┌────▼────┐      ┌─────▼──────┐
-   │Sentinel │      │ OpenWeather│
-   │Hub API  │      │   API      │
-   │         │      │            │
-   └────┬────┘      └─────┬──────┘
-        │                 │
-        └────────┬────────┘
-                 │
-        ┌────────▼────────┐
-        │ Data Processing │
-        │  (NumPy/PIL)    │
-        └────────┬────────┘
-                 │
-        ┌────────▼────────┐
-        │  NDVI/NDWI/NDBI │
-        │  Calculation    │
-        └────────┬────────┘
-                 │
-        ┌────────▼────────┐
-        │ ResNet18 Model  │
-        │ (PyTorch)       │
-        └────────┬────────┘
-                 │
-        ┌────────▼────────┐
-        │ Visualization   │
-        │ (Matplotlib)    │
-        └────────┬────────┘
-                 │
-        ┌────────▼────────┐
-        │   UI Display    │
-        │ (Glassmorphism) │
-        └─────────────────┘
-```
-
----
-
-## 🛠️ Project Structure
-
-```
-bird-population-decline-ai/
-├── app.py                          # Main Streamlit application
-├── config.py                       # Configuration settings
-├── model_loader.py                 # Model loading utilities
-├── model_utils.py                  # Model processing utilities
-├── predictor.py                    # Prediction pipeline
-├── sentinel_utils.py               # Sentinel Hub API integration
-├── requirements.txt                # Python dependencies
-├── bird_decline_model.pth          # Pre-trained model weights
-├── ui_style.css                    # Custom CSS styling
-├── static/
-│   └── index.html                  # Landing page
-├── .env                            # Environment variables (create this)
-├── .gitignore                      # Git ignore file
-├── README.md                       # This file
-├── WEB_APP_REPORT.md               # Detailed technical report
-└── __pycache__/                    # Python cache
-```
-
----
-
-## 📦 Dependencies
-
-### Core Libraries
-```
-streamlit>=1.0.0
-torch>=0.14.0
-torchvision>=0.15.0
-numpy>=1.20.0
-matplotlib>=3.5.0
-pillow>=8.0.0
-requests>=2.28.0
-rasterio>=1.3.0
-```
-
-### Geospatial & Mapping
-```
-folium>=0.14.0
-streamlit-folium>=0.6.0
-pyproj>=3.0.0
-```
-
-### Utilities
-```
-python-dotenv>=0.19.0
-fpdf2>=2.7.8
-```
-
-**See [requirements.txt](requirements.txt) for complete list**
-
----
-
-## 🔬 Algorithm Details
-
-### NDVI (Vegetation Health)
-```
-NDVI = (NIR - RED) / (NIR + RED)
-Range: -1.0 to +1.0
-- High (0.7+): Dense, healthy vegetation ✅
-- Medium (0.4-0.6): Moderate vegetation
-- Low (<0.3): Poor/no vegetation ❌
-```
-
-### NDWI (Water Detection)
-```
-NDWI = (GREEN - NIR) / (GREEN + NIR)
-Range: -1.0 to +1.0
-- Positive (0.3-1.0): Water bodies 💧
-- Negative: Vegetation/dry areas
-```
-
-### NDBI (Urban Detection)
-```
-NDBI = (SWIR - NIR) / (SWIR + NIR)
-Range: -1.0 to +1.0
-- Positive: Urban/built-up areas 🏙️
-- Negative: Natural vegetation
-```
-
-### Habitat Health Score
-```
-Score = (NDVI × 40%) + (Water × 30%) - (Urban × 30%)
-Rating:
-- 70-100: Excellent habitat ⭐⭐⭐
-- 50-70: Good habitat ⭐⭐
-- 30-50: Fair habitat ⭐
-- 0-30: Poor habitat ❌
-```
-
----
-
-## 🎨 UI/UX Features
-
-### Design Philosophy
-- **Glassmorphism**: Frosted glass effect with backdrop blur
-- **Dark Theme**: Reduces eye strain, modern aesthetic
-- **Gradient Colors**: Green (#10b981) → Cyan (#06b6d4) → Yellow-Green (#4ade80)
-- **Smooth Animations**: 0.3s transitions, hover effects
-- **Responsive Layout**: Works on desktop, tablet, mobile
-
-### Color Palette
-| Element | Color | Hex |
-|---------|-------|-----|
-| Primary | Emerald Green | #10b981 |
-| Secondary | Cyan | #06b6d4 |
-| Accent | Lime Green | #4ade80 |
-| Background | Dark Slate | #0f172a |
-| Text | Light Gray | #e5e7eb |
-
----
-
-## ⚡ Performance
-
-| Operation | Time | Notes |
-|-----------|------|-------|
-| Satellite fetch | 3-8s | Sentinel Hub API |
-| Index calculation | 1-2s | NDVI/NDWI/NDBI |
-| Model inference | 0.5-1s | ResNet18 forward pass |
-| Visualization | 1-3s | Matplotlib rendering |
-| **Total per click** | **5-15s** | End-to-end processing |
-| **Time-series (365 days)** | **20-40s** | Multiple API calls |
-
-### Infrastructure Requirements
-- **CPU**: 4+ cores
-- **RAM**: 8 GB (16 GB recommended)
-- **Storage**: 10 GB
-- **Network**: 100+ Mbps
-
----
-
-## 🚀 Deployment
-
-### **Streamlit Cloud** (Easiest)
 ```bash
-# Push to GitHub, then link in Streamlit Cloud
-# https://streamlit.io/cloud
+cp .env.example .env     # then fill in your keys
+
+# Option A — mirror production with the Vercel CLI
+npm i -g vercel
+vercel dev               # static site + /api/* Python functions together
+
+# Option B — no Vercel CLI needed (built-in dev server)
+python -m venv .venv && .venv\Scripts\activate   # (source .venv/bin/activate on macOS/Linux)
+pip install -r requirements.txt requests
+python _dev_server.py    # http://127.0.0.1:3000  (serves static + /api/*)
 ```
 
-### **Docker**
+### Run the automated checks
+
 ```bash
-docker build -t bird-decline-ai .
-docker run -p 8501:8501 bird-decline-ai
+python _smoke_test.py     # pipeline: indices, classify, analyze_tile, PDF     (42 checks)
+python _http_test.py      # every /api endpoint over HTTP (mocked network)      (21 checks)
 ```
 
-### **AWS EC2**
-```bash
-# Launch Ubuntu instance
-sudo apt update && sudo apt install python3-pip
-pip install -r requirements.txt
-streamlit run app.py
+CI runs both suites plus JS syntax checks on every push (see
+[`.github/workflows/ci.yml`](.github/workflows/ci.yml)).
+
+---
+
+## 🔬 Algorithms
+
+```
+NDVI = (NIR   - Red)  / (NIR   + Red)     vegetation health   [-1..1]
+NDWI = (Green - NIR)  / (Green + NIR)     water content       [-1..1]
+NDBI = (SWIR1 - NIR)  / (SWIR1 + NIR)     built-up areas      [-1..1]
+EVI  = 2.5 * (NIR - Red) / (NIR + 6*Red - 7.5*Blue + 1)       enhanced vegetation
+SAVI = (NIR - Red) / (NIR + Red + 0.5) * 1.5                  soil-adjusted vegetation
+NDMI = (NIR - SWIR1) / (NIR + SWIR1)      vegetation moisture [-1..1]
+NBR  = (NIR - SWIR2) / (NIR + SWIR2)      burn / vegetation   [-1..1]
+
+Habitat Health    = clamp((NDVI + 1) * 50, 0, 100)
+Bird Decline Risk = 100 - Habitat Health
 ```
 
-### **Google Cloud Run**
-```bash
-gcloud run deploy bird-decline-ai --source .
+Bands requested from Sentinel-2 L2A: **B02** (Blue), **B03** (Green), **B04** (Red),
+**B08** (NIR), **B11** (SWIR1), **B12** (SWIR2).
+
+Land-cover rules: `NDWI > 0.2` → Water/Wetland · `NDBI > 0 and NDVI < 0.3` →
+Urban/Built-up · `NDVI ≥ 0.6` → Dense Forest · `NDVI ≥ 0.3` → Moderate
+Vegetation/Cropland · else → Barren/Sparse.
+
+> ⚠️ **This is a demonstration / educational tool, not a validated scientific
+> instrument.** Scores are index-derived proxies and should not replace field
+> ecology or peer-reviewed population studies.
+
+---
+
+## 🛠️ Project structure
+
+```
+Bird-Population-Decline-AI/
+├── index.html                 # Landing page
+├── dashboard.html             # Dashboard (map, change detection, time-series, about)
+├── methodology.html           # Pipeline & formulas
+├── explore.html               # Example habitats (deep-link into the dashboard)
+├── about.html · faq.html      # Content pages
+├── 404.html                   # On-brand not-found page
+├── manifest.webmanifest       # PWA manifest
+├── sw.js                      # PWA service worker (offline shell)
+├── assets/
+│   ├── css/style.css          # Design system (light/dark, components)
+│   ├── js/site.js             # Shared: theme, nav, reveal, accordion, PWA
+│   ├── js/dashboard.js        # Dashboard logic (Mapbox, Chart.js, API calls)
+│   └── icon.svg               # App icon
+├── api/
+│   ├── _utils.py              # Shared: Sentinel, indices, GBIF, geocode, cache, guard
+│   ├── config.py              # GET  public config
+│   ├── analyze.py             # POST lat/lon[/bbox] -> full analysis
+│   ├── change.py              # POST two dates -> NDVI change map
+│   ├── timeseries.py          # POST date range -> NDVI series + baseline
+│   ├── weather.py             # GET  lat/lon -> weather
+│   └── report.py              # POST metrics -> PDF
+├── requirements.txt           # Serverless deps (numpy, matplotlib, pillow, tifffile, requests, fpdf2)
+├── vercel.json                # Functions config + rewrites + headers
+├── .vercelignore              # Keeps dev/test/legacy files out of the deploy
+├── .env.example               # Environment variable template
+├── _dev_server.py             # Local dev server (mirrors Vercel routing)
+├── _smoke_test.py · _http_test.py   # Test suites
+├── .github/workflows/ci.yml   # CI
+└── legacy_streamlit/          # Archived original Streamlit + PyTorch app
 ```
 
 ---
 
-## 📖 Documentation
+## 🔒 Security notes
 
-- [WEB_APP_REPORT.md](WEB_APP_REPORT.md) - Comprehensive technical report
-- [Sentinel Hub Docs](https://www.sentinel-hub.com/develop/)
-- [OpenWeather API](https://openweathermap.org/api)
-- [Mapbox Documentation](https://docs.mapbox.com/)
-- [PyTorch Docs](https://pytorch.org/docs/)
-- [Streamlit Guide](https://docs.streamlit.io/)
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome! Here's how to contribute:
-
-1. **Fork** the repository
-2. **Create** a feature branch (`git checkout -b feature/amazing-feature`)
-3. **Commit** your changes (`git commit -m 'Add amazing feature'`)
-4. **Push** to the branch (`git push origin feature/amazing-feature`)
-5. **Open** a Pull Request
-
-### Development Setup
-```bash
-git clone https://github.com/yourusername/bird-population-decline-ai.git
-cd bird-population-decline-ai
-python -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-streamlit run app.py
-```
-
-### Code Guidelines
-- Follow PEP 8 style guide
-- Add comments for complex logic
-- Include docstrings for functions
-- Test before submitting PR
-
----
-
-### Workarounds
-- Select dates with lower cloud cover
-- Fine-tune model on labeled data for production
-- Implement request caching for repeated queries
-- Use VPN if rate-limited by APIs
-
----
-
-## 📋 Roadmap
-
-### v2.1 (Q1 2026)
-- [ ] Database integration for historical caching
-- [ ] Multi-location comparison tool
-- [ ] Batch processing API
-- [ ] Mobile app (React Native)
-
-### v2.2 (Q2 2026)
-- [ ] Advanced filtering (by season, weather)
-- [ ] GBIF bird sighting integration
-- [ ] Custom area drawing on map
-- [ ] Export to GeoJSON/Shapefile
-
-### v3.0 (Q3 2026)
-- [ ] Real-time monitoring alerts
-- [ ] Drone imagery integration
-- [ ] Advanced ML model fine-tuning
-- [ ] International language support
+- The API is **open** (no login) but hardened: set `ALLOWED_ORIGIN_HOSTS` to your
+  domain to reject cross-origin calls, and `RATE_LIMIT_PER_MIN` to throttle abuse.
+- All third-party keys live in environment variables; only the public Mapbox token
+  reaches the browser. Restrict that token by URL in your Mapbox account.
 
 ---
 
 ## 📄 License
 
-This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+MIT. See [LICENSE](LICENSE).
 
----
-
-## 👥 Authors
-
-- **Developed by**: 
-
-1. Jan Adnan Farooq (Me)
-2. Neeladri Bijay Misra  
-3. Ashutosh Pradhan  
-   - GitHub: https://github.com/AshutoshPradhan02  
-4. Monideepa Kar
-
-
-- **Version**: 2.0
-- **Last Updated**: December 13, 2025
-
----
-
-## 📧 Support & Contact
-
-- **Issues**: [GitHub Issues](https://github.com/yourusername/bird-population-decline-ai/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/yourusername/bird-population-decline-ai/discussions)
-- **Email**: support@example.com
-
----
-
-## 🙏 Acknowledgments
-
-This project utilizes:
-- **Sentinel-2 data** from European Commission Copernicus Programme
-- **OpenWeather** for real-time weather data
-- **Mapbox** for satellite basemaps
-- **PyTorch team** for the deep learning framework
-- **Streamlit** team for the amazing web framework
-
----
-
-## 🔗 Related Resources
-
-- [Sentinel Hub](https://www.sentinel-hub.com/) - Satellite data access
-- [Copernicus Programme](https://www.copernicus.eu/) - Earth observation
-- [eBird Database](https://ebird.org/) - Bird sighting records
-- [GBIF](https://www.gbif.org/) - Biodiversity data
-- [Conservation International](https://www.conservation.org/) - Conservation insights
-
----
-
-## ⭐ Star us!
-
-If you find this project useful, please give it a ⭐ on GitHub!
-
-```
-Made by Adnan with ❤️ using Streamlit, Sentinel-2 & PyTorch
-```
-
-
-## 📢 Connect with Me
-[![GitHub](https://img.shields.io/badge/GitHub-black?logo=github&logoColor=white)](https://github.com/Adnaan-dev)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/jan-adnan-farooq-b216b7321/)
----
-
-**Last Updated**: December 13, 2025 | **Status**: ✅ Production Ready
+Built with ❤️ using Sentinel-2, Mapbox, GBIF, OpenWeather, and Python serverless functions.

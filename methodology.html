@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Methodology · Bird Population Decline AI</title>
+  <meta name="description" content="How the platform turns Sentinel-2 multispectral imagery into NDVI/NDWI/NDBI indices, land-cover classification, and habitat health / bird-decline risk scores." />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%A6%85%3C/text%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="/assets/css/style.css" />
+</head>
+<body>
+
+  <nav class="navbar">
+    <a href="/" class="brand" style="color:inherit;"><span class="logo">🦅</span><span>Bird Population Decline&nbsp;AI</span></a>
+    <div class="nav-links">
+      <a href="/methodology" class="hide-sm active-link">Methodology</a>
+      <a href="/explore" class="hide-sm">Explore</a>
+      <a href="/about" class="hide-sm">About</a>
+      <a href="/faq" class="hide-sm">FAQ</a>
+      <button class="theme-toggle" data-theme-toggle type="button" aria-label="Toggle color theme" aria-pressed="false" title="Toggle light / dark"><span class="sun">☀️</span><span class="moon">🌙</span></button>
+      <a href="/dashboard" class="btn btn-primary" style="padding:0.6rem 1.2rem;">Launch Dashboard</a>
+    </div>
+    <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false"><span></span></button>
+  </nav>
+
+  <main class="page">
+    <a href="/" class="back-link">← Back home</a>
+    <div class="page-head reveal">
+      <span class="eyebrow">🔬 The pipeline</span>
+      <h1>How it <span class="gradient-text">works</span></h1>
+      <p>From a single map click to a habitat score — every step is deterministic and grounded in remote-sensing conventions.</p>
+    </div>
+
+    <!-- Pipeline diagram -->
+    <div class="card reveal" style="margin-bottom:2rem;overflow-x:auto;">
+      <svg class="diagram" viewBox="0 0 920 130" role="img" aria-label="Pipeline: click, fetch Sentinel-2, compute indices, classify and score, report" style="min-width:760px;">
+        <defs>
+          <linearGradient id="g" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#10b981"/><stop offset="0.55" stop-color="#06b6d4"/><stop offset="1" stop-color="#4ade80"/>
+          </linearGradient>
+        </defs>
+        <g font-family="Inter, sans-serif" font-size="13" font-weight="700" text-anchor="middle">
+          <!-- boxes -->
+          <g>
+            <rect x="10"  y="35" width="150" height="60" rx="14" fill="rgba(16,185,129,0.12)" stroke="url(#g)"/>
+            <text x="85" y="60" fill="#e8eef7">📍 Click</text>
+            <text x="85" y="80" fill="#9fb0c8" font-size="11" font-weight="400">lat / lon</text>
+          </g>
+          <g>
+            <rect x="200" y="35" width="150" height="60" rx="14" fill="rgba(6,182,212,0.12)" stroke="url(#g)"/>
+            <text x="275" y="60" fill="#e8eef7">🛰️ Fetch</text>
+            <text x="275" y="80" fill="#9fb0c8" font-size="11" font-weight="400">Sentinel-2 tile</text>
+          </g>
+          <g>
+            <rect x="390" y="35" width="150" height="60" rx="14" fill="rgba(74,222,128,0.12)" stroke="url(#g)"/>
+            <text x="465" y="60" fill="#e8eef7">🌿 Indices</text>
+            <text x="465" y="80" fill="#9fb0c8" font-size="11" font-weight="400">NDVI·NDWI·NDBI</text>
+          </g>
+          <g>
+            <rect x="580" y="35" width="150" height="60" rx="14" fill="rgba(16,185,129,0.12)" stroke="url(#g)"/>
+            <text x="655" y="60" fill="#e8eef7">🦅 Score</text>
+            <text x="655" y="80" fill="#9fb0c8" font-size="11" font-weight="400">habitat · risk</text>
+          </g>
+          <g>
+            <rect x="770" y="35" width="140" height="60" rx="14" fill="rgba(6,182,212,0.12)" stroke="url(#g)"/>
+            <text x="840" y="60" fill="#e8eef7">📄 Report</text>
+            <text x="840" y="80" fill="#9fb0c8" font-size="11" font-weight="400">PDF export</text>
+          </g>
+          <!-- arrows -->
+          <g stroke="url(#g)" stroke-width="2.5" marker-end="url(#arw)">
+            <line x1="162" y1="65" x2="198" y2="65"/>
+            <line x1="352" y1="65" x2="388" y2="65"/>
+            <line x1="542" y1="65" x2="578" y2="65"/>
+            <line x1="732" y1="65" x2="768" y2="65"/>
+          </g>
+          <defs>
+            <marker id="arw" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+              <path d="M0,0 L6,3 L0,6 Z" fill="#06b6d4"/>
+            </marker>
+          </defs>
+        </g>
+      </svg>
+    </div>
+
+    <div class="prose reveal">
+      <h2>1 · Sentinel-2 imagery</h2>
+      <p>
+        When you click a location, a serverless function requests a small tile of
+        <b>Sentinel-2 L2A</b> surface-reflectance imagery around that point from the
+        Sentinel Hub Process API (via the Copernicus Data Space Ecosystem), filtered to
+        low cloud cover. Five bands are requested:
+      </p>
+      <div class="formula">
+        <span class="fname">Bands</span> = B02 (Blue) · B03 (Green) · B04 (Red) · B08 (NIR) · B11 (SWIR)
+      </div>
+      <p>
+        The multiband GeoTIFF is parsed in pure Python with <code>tifffile</code> — no GDAL
+        or rasterio — which keeps the function bundle small enough for serverless limits.
+      </p>
+
+      <h2>2 · Spectral indices</h2>
+      <p>Three normalized-difference indices are computed per pixel, each ranging −1 … +1:</p>
+      <div class="formula"><span class="fname">NDVI</span> = (NIR − Red) / (NIR + Red) &nbsp;&nbsp;→ vegetation health</div>
+      <div class="formula"><span class="fname">NDWI</span> = (Green − NIR) / (Green + NIR) &nbsp;&nbsp;→ water content</div>
+      <div class="formula"><span class="fname">NDBI</span> = (SWIR − NIR) / (SWIR + NIR) &nbsp;&nbsp;→ built-up density</div>
+      <p>
+        Each index is also rendered as a color heatmap so you can visually inspect
+        vegetation, water and urbanization across the tile.
+      </p>
+
+      <h2>3 · Land-cover classification</h2>
+      <p>Land-cover is assigned deterministically from index thresholds — no black-box model:</p>
+      <ul>
+        <li><code>NDWI &gt; 0.2</code> → <b>Water / Wetland</b></li>
+        <li><code>NDBI &gt; 0</code> and <code>NDVI &lt; 0.3</code> → <b>Urban / Built-up</b></li>
+        <li><code>NDVI ≥ 0.6</code> → <b>Dense Forest</b></li>
+        <li><code>NDVI ≥ 0.3</code> → <b>Moderate Vegetation / Cropland</b></li>
+        <li>otherwise → <b>Barren / Sparse</b></li>
+      </ul>
+
+      <h2>4 · Habitat health &amp; decline risk</h2>
+      <p>
+        Mean NDVI over the tile drives two 0–100 scores. Healthy vegetation supports richer
+        bird habitat, so habitat health scales with NDVI, and decline risk is its complement:
+      </p>
+      <div class="formula"><span class="fname">Habitat Health</span> = clamp((NDVI + 1) × 50, 0, 100)</div>
+      <div class="formula"><span class="fname">Bird Decline Risk</span> = 100 − Habitat Health</div>
+
+      <h2>5 · Time-series &amp; report</h2>
+      <p>
+        The NDVI time-series tab samples the archive roughly monthly across a date range to
+        reveal seasonal cycles or gradual degradation. Any analysis can be exported as a
+        documented PDF report.
+      </p>
+
+      <div class="info-box" style="margin-top:1.5rem;">
+        <b>Important:</b> this is a demonstration of remote-sensing techniques, not a validated
+        scientific instrument. Scores are index-derived proxies and should not replace
+        field ecology or peer-reviewed population studies. See the
+        <a href="/about">About</a> page for caveats.
+      </div>
+    </div>
+
+    <div style="text-align:center;margin-top:2.5rem;">
+      <a href="/dashboard" class="btn btn-primary">🚀 Try it on the dashboard</a>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div style="margin-bottom:0.8rem;">
+      <a href="/methodology">Methodology</a> · <a href="/explore">Explore</a> ·
+      <a href="/about">About</a> · <a href="/faq">FAQ</a>
+    </div>
+    Bird Population Decline AI · Sentinel-2 satellite intelligence · <span data-year></span>
+  </footer>
+
+  <script src="/assets/js/site.js"></script>
+</body>
+</html>

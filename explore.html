@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Explore · Bird Population Decline AI</title>
+  <meta name="description" content="Explore example habitats — rainforest, wetland, cropland, desert and urban — and open them directly in the analysis dashboard." />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%A6%85%3C/text%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="/assets/css/style.css" />
+</head>
+<body>
+
+  <nav class="navbar">
+    <a href="/" class="brand" style="color:inherit;"><span class="logo">🦅</span><span>Bird Population Decline&nbsp;AI</span></a>
+    <div class="nav-links">
+      <a href="/methodology" class="hide-sm">Methodology</a>
+      <a href="/explore" class="hide-sm active-link">Explore</a>
+      <a href="/about" class="hide-sm">About</a>
+      <a href="/faq" class="hide-sm">FAQ</a>
+      <button class="theme-toggle" data-theme-toggle type="button" aria-label="Toggle color theme" aria-pressed="false" title="Toggle light / dark"><span class="sun">☀️</span><span class="moon">🌙</span></button>
+      <a href="/dashboard" class="btn btn-primary" style="padding:0.6rem 1.2rem;">Launch Dashboard</a>
+    </div>
+    <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false"><span></span></button>
+  </nav>
+
+  <main class="page page-wide">
+    <a href="/" class="back-link">← Back home</a>
+    <div class="page-head reveal">
+      <span class="eyebrow">🌍 Example habitats</span>
+      <h1>Explore <span class="gradient-text">real locations</span></h1>
+      <p>Pick a habitat type below — it opens the dashboard at those coordinates and runs the analysis automatically.</p>
+    </div>
+
+    <div class="example-grid">
+      <a class="card loc-card reveal" href="/dashboard?lat=-3.4653&lon=-62.2159&go=1">
+        <div class="loc-emoji">🌳</div>
+        <h3>Amazon Rainforest</h3>
+        <div class="loc-coords">-3.4653°, -62.2159° · Brazil</div>
+        <p>Dense tropical canopy — expect very high NDVI and strong habitat health.</p>
+        <div class="loc-go">Analyze this location →</div>
+      </a>
+
+      <a class="card loc-card reveal d1" href="/dashboard?lat=21.9497&lon=89.1833&go=1">
+        <div class="loc-emoji">💧</div>
+        <h3>Sundarbans Wetland</h3>
+        <div class="loc-coords">21.9497°, 89.1833° · Bangladesh / India</div>
+        <p>Mangrove delta — a mix of water (high NDWI) and vegetation.</p>
+        <div class="loc-go">Analyze this location →</div>
+      </a>
+
+      <a class="card loc-card reveal d2" href="/dashboard?lat=30.9010&lon=75.8573&go=1">
+        <div class="loc-emoji">🌾</div>
+        <h3>Punjab Cropland</h3>
+        <div class="loc-coords">30.9010°, 75.8573° · India</div>
+        <p>Intensive agriculture — moderate, seasonally varying NDVI.</p>
+        <div class="loc-go">Analyze this location →</div>
+      </a>
+
+      <a class="card loc-card reveal" href="/dashboard?lat=40.7580&lon=-73.9855&go=1">
+        <div class="loc-emoji">🏙️</div>
+        <h3>New York City</h3>
+        <div class="loc-coords">40.7580°, -73.9855° · USA</div>
+        <p>Dense urban core — high NDBI, low NDVI, elevated decline risk.</p>
+        <div class="loc-go">Analyze this location →</div>
+      </a>
+
+      <a class="card loc-card reveal d1" href="/dashboard?lat=23.4162&lon=25.6628&go=1">
+        <div class="loc-emoji">🏜️</div>
+        <h3>Sahara Desert</h3>
+        <div class="loc-coords">23.4162°, 25.6628° · Algeria</div>
+        <p>Barren sand — near-zero NDVI and minimal habitat support.</p>
+        <div class="loc-go">Analyze this location →</div>
+      </a>
+
+      <a class="card loc-card reveal d2" href="/dashboard?lat=0.5000&lon=23.0000&go=1">
+        <div class="loc-emoji">🌴</div>
+        <h3>Congo Basin</h3>
+        <div class="loc-coords">0.5000°, 23.0000° · DR Congo</div>
+        <p>Second-largest rainforest on Earth — a critical bird habitat.</p>
+        <div class="loc-go">Analyze this location →</div>
+      </a>
+    </div>
+
+    <div class="info-box reveal" style="margin-top:2rem;">
+      Prefer your own spot? Open the <a href="/dashboard">dashboard</a> and click anywhere on the map.
+      Imagery availability depends on cloud cover, so some remote points may occasionally return no tile.
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div style="margin-bottom:0.8rem;">
+      <a href="/methodology">Methodology</a> · <a href="/explore">Explore</a> ·
+      <a href="/about">About</a> · <a href="/faq">FAQ</a>
+    </div>
+    Bird Population Decline AI · Sentinel-2 satellite intelligence · <span data-year></span>
+  </footer>
+
+  <script src="/assets/js/site.js"></script>
+</body>
+</html>

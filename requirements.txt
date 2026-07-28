@@ -1,12 +1,10 @@
-streamlit
-numpy
-torch
-torchvision
-matplotlib
-rasterio
-requests
-streamlit-folium
-folium
-fpdf2
-python-dotenv
-msal
+# Serverless-safe dependencies for Vercel Python functions (Python 3.12).
+# No torch / torchvision / rasterio (GDAL) — those exceed Vercel's function size
+# limits and are unnecessary: land-cover is derived deterministically from
+# Sentinel-2 spectral indices, and GeoTIFFs are parsed with pure-Python tifffile.
+numpy==1.26.4
+matplotlib==3.9.2
+pillow==10.4.0
+tifffile==2024.8.30
+requests==2.32.3
+fpdf2==2.7.9

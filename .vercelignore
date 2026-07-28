@@ -1,0 +1,24 @@
+# Local dev server (Vercel provides its own runtime)
+_dev_server.py
+
+# Test suites (run in CI, not needed in the deployment)
+_smoke_test.py
+_http_test.py
+
+# Archived original Streamlit + PyTorch app
+legacy_streamlit/
+
+# CI / repo tooling
+.github/
+.hintrc
+
+# Docs / reports not needed at runtime
+WEB_APP_REPORT.md
+
+# Local artifacts
+*.log
+.venv/
+venv/
+__pycache__/
+*.pyc
+.env
